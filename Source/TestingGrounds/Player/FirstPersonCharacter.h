@@ -44,6 +44,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	uint32 bUsingMotionControllers : 1;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Setup)
+		TSubclassOf<class AGun> GunBlueprint;
+	
+private:
+
+	AGun* Gun;
+
 protected:
 
 	/** Handles moving forward/backward */
