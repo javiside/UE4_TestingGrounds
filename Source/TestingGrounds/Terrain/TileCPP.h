@@ -1,0 +1,31 @@
+// Copyright Javier Martinez 2017.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "TileCPP.generated.h"
+
+UCLASS()
+class TESTINGGROUNDS_API ATileCPP : public AActor
+{
+	GENERATED_BODY()
+	
+public:	
+	// Sets default values for this actor's properties
+	ATileCPP();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void PlaceActors(TSubclassOf<AActor> ToSpawn, int32 MinSpawn, int32 MaxSpawn);
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+public:	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	
+	
+};
