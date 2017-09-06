@@ -6,6 +6,17 @@
 #include "TileCPP.generated.h"
 
 class UActorPool;
+
+USTRUCT()
+struct FSpawnPosition
+{
+	GENERATED_USTRUCT_BODY()
+
+	FVector Location;
+	float Rotation;
+	float Scale;
+};
+
 UCLASS()
 class TESTINGGROUNDS_API ATileCPP : public AActor
 {
@@ -16,7 +27,7 @@ public:
 	ATileCPP();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void PlaceActors(TSubclassOf<AActor> ToSpawn, int32 MinSpawn = 1, int32 MaxSpawn = 1, float Radius = 500, float MinScale = 1.0f, float MaxScale = 1.0f);
+		void PlaceActors(TSubclassOf<AActor> ToSpawn, int32 MinSpawn = 1, int32 MaxSpawn = 1, float MinScale = 1.0f, float MaxScale = 1.0f, float Radius = 500);
 
 protected:
 	// Called when the game starts or when spawned
@@ -41,9 +52,11 @@ public:
 
 private:
 
+	TArray<FSpawnPosition> RandomSpawnPositions(int32 MinSpawn, int32 MaxSpawn, float MinScale, float MaxScale, float Radius);
+
 	bool FindEmptyLocation(FVector &OutLocation, float Radius);
 
-	void PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint, float Rotation, float Scale);
+	void PlaceActor(TSubclassOf<AActor> ToSpawn, FSpawnPosition SpawnPosition);
 
 	bool CanSpawnAtLocation(FVector Location, float Radius);	
 
