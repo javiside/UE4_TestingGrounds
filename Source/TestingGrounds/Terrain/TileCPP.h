@@ -1,5 +1,4 @@
 // Copyright Javier Martinez 2017.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -7,7 +6,6 @@
 #include "TileCPP.generated.h"
 
 class UActorPool;
-
 UCLASS()
 class TESTINGGROUNDS_API ATileCPP : public AActor
 {
@@ -24,6 +22,12 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
+		FVector MinExtent;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Spawning")
+		FVector MaxExtent;
 
 public:	
 	// Called every frame
