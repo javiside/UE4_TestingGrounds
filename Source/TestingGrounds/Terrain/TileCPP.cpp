@@ -4,8 +4,6 @@
 #include "ActorPool.h"
 #include "AI/Navigation/NavigationSystem.h"
 
-
-
 // Sets default values
 ATileCPP::ATileCPP()
 {
@@ -39,9 +37,9 @@ void ATileCPP::PositionNavMeshBoundsVolume()
 	GetWorld()->GetNavigationSystem()->Build();
 }
 
-void ATileCPP::PlaceActors(TSubclassOf<AActor> ToSpawn, int32 MinSpawn, int32 MaxSpawn, float MinScale, float MaxScale, float Radius)
+void ATileCPP::PlaceActors(TSubclassOf<AActor> ToSpawn, FPlacingProperties PlacingProperties)
 {
-	TArray<FSpawnPosition> SpawnPositions = RandomSpawnPositions(MinSpawn, MaxSpawn, MinScale, MaxScale, Radius);
+	TArray<FSpawnPosition> SpawnPositions = RandomSpawnPositions(PlacingProperties);
 
 	for (FSpawnPosition SpawnPosition : SpawnPositions)
 	{
@@ -49,18 +47,18 @@ void ATileCPP::PlaceActors(TSubclassOf<AActor> ToSpawn, int32 MinSpawn, int32 Ma
 	}
 }
 
-TArray<FSpawnPosition> ATileCPP::RandomSpawnPositions(int32 MinSpawn, int32 MaxSpawn, float MinScale, float MaxScale, float Radius)
+TArray<FSpawnPosition> ATileCPP::RandomSpawnPositions(FPlacingProperties PlacingProperties)
 {
 	TArray<FSpawnPosition> SpawnPositions;
-	int32 NumberToSpawn = FMath::RandRange(MinSpawn, MaxSpawn);
+	int32 NumberToSpawn = FMath::RandRange(PlacingProperties.MinSpawn, PlacingProperties.MaxSpawn);
 
 	for (size_t i = 0; i < NumberToSpawn; i++)
 	{
 		FSpawnPosition SpawnPosition;
 
-		SpawnPosition.Scale = FMath::RandRange(MinScale, MaxScale);
+		SpawnPosition.Scale = FMath::RandRange(PlacingProperties.MinScale, PlacingProperties.MaxScale);
 
-		bool Found = FindEmptyLocation(SpawnPosition.Location, Radius * SpawnPosition.Scale);
+		bool Found = FindEmptyLocation(SpawnPosition.Location, PlacingProperties.Radius * SpawnPosition.Scale);
 		if (Found)
 		{
 			SpawnPosition.Rotation = FMath::RandRange(-180.0f, 180.0f);

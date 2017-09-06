@@ -7,6 +7,28 @@
 
 class UActorPool;
 
+USTRUCT(BlueprintType)
+struct FPlacingProperties
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Placing Properties Struct")
+	int32 MinSpawn;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Placing Properties Struct")
+	int32 MaxSpawn;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Placing Properties Struct")
+	float MinScale;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Placing Properties Struct")
+	float MaxScale;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Placing Properties Struct")
+	float Radius;
+
+};
+
 USTRUCT()
 struct FSpawnPosition
 {
@@ -27,7 +49,7 @@ public:
 	ATileCPP();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void PlaceActors(TSubclassOf<AActor> ToSpawn, int32 MinSpawn = 1, int32 MaxSpawn = 1, float MinScale = 1.0f, float MaxScale = 1.0f, float Radius = 500);
+	void PlaceActors(TSubclassOf<AActor> ToSpawn, FPlacingProperties PlacingProperties);
 
 protected:
 	// Called when the game starts or when spawned
@@ -52,7 +74,7 @@ public:
 
 private:
 
-	TArray<FSpawnPosition> RandomSpawnPositions(int32 MinSpawn, int32 MaxSpawn, float MinScale, float MaxScale, float Radius);
+	TArray<FSpawnPosition> RandomSpawnPositions(FPlacingProperties PlacingProperties);
 
 	bool FindEmptyLocation(FVector &OutLocation, float Radius);
 
