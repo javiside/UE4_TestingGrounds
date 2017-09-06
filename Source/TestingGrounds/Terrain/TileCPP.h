@@ -77,13 +77,13 @@ public:
 
 private:
 
-	TArray<FSpawnPosition> RandomSpawnPositions(FPlacingProperties PlacingProperties);
-
 	bool FindEmptyLocation(FVector &OutLocation, float Radius);
 
-	void PlaceActor(TSubclassOf<AActor> ToSpawn, FSpawnPosition SpawnPosition);
+	template<class T>
+	void RandomlyPlaceActor(TSubclassOf<T> ToSpawn, FPlacingProperties PlacingProperties);
 
-	void PlaceAIPawn(TSubclassOf<APawn> AIToSpawn, FSpawnPosition SpawnPosition);
+	void PlaceActor(TSubclassOf<AActor> ToSpawn, FSpawnPosition SpawnPosition);
+	void PlaceActor(TSubclassOf<APawn>  ToSpawn, FSpawnPosition SpawnPosition);
 
 	bool CanSpawnAtLocation(FVector Location, float Radius);	
 
