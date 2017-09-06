@@ -18,7 +18,6 @@ ATileCPP::ATileCPP()
 
 void ATileCPP::SetPool(UActorPool* InPool)
 {
-	UE_LOG(LogTemp, Warning, TEXT(" %s Setting Pool %s"), *(this->GetName()), *(InPool->GetName()));
 	Pool = InPool;
 
 	PositionNavMeshBoundsVolume();
@@ -29,10 +28,10 @@ void ATileCPP::PositionNavMeshBoundsVolume()
 	NavMeshBoundsVolume = Pool->CheckOut();
 	if (NavMeshBoundsVolume == nullptr)
 	{
-		UE_LOG(LogTemp, Error, TEXT("[%s] Not enough actors in pool "), *GetName());
+	//	UE_LOG(LogTemp, Error, TEXT("[%s] Not enough actors in pool "), *GetName());
 		return;
 	}
-	UE_LOG(LogTemp, Warning, TEXT("[%s] Checked out %s "), *GetName(), *NavMeshBoundsVolume->GetName());
+	//UE_LOG(LogTemp, Warning, TEXT("[%s] Checked out %s "), *GetName(), *NavMeshBoundsVolume->GetName());
 	NavMeshBoundsVolume->SetActorLocation(GetActorLocation() + NavigationBoundsOffset);
 	GetWorld()->GetNavigationSystem()->Build();
 }
@@ -44,6 +43,23 @@ void ATileCPP::PlaceActors(TSubclassOf<AActor> ToSpawn, FPlacingProperties Placi
 	for (FSpawnPosition SpawnPosition : SpawnPositions)
 	{
 		PlaceActor(ToSpawn, SpawnPosition);
+	}
+}
+
+void ATileCPP::PlaceAIPawns(TSubclassOf<APawn> AIToSpawn, int32 MinSpawn, int32 MaxSpawn)
+{
+	FPlacingProperties PlacingAIProperties;
+	PlacingAIProperties.MaxSpawn = MinSpawn;
+	PlacingAIProperties.MinScale = MaxSpawn;
+	PlacingAIProperties.MinScale = 1.0f;
+	PlacingAIProperties.MaxScale = 1.0f;
+	PlacingAIProperties.Radius = 200.0f;
+
+	TArray<FSpawnPosition> SpawnPositions = RandomSpawnPositions(PlacingAIProperties);
+
+	for (FSpawnPosition SpawnPosition : SpawnPositions)
+	{
+		PlaceAIPawn(AIToSpawn, SpawnPosition);
 	}
 }
 
@@ -82,7 +98,6 @@ bool ATileCPP::FindEmptyLocation(FVector &OutLocation, float Radius)
 			return true;
 		}
 	}
-
 	return false;
 }
 
@@ -93,6 +108,19 @@ void ATileCPP::PlaceActor(TSubclassOf<AActor> ToSpawn, FSpawnPosition SpawnPosit
 	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
 	Spawned->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));
 	Spawned->SetActorScale3D(FVector(SpawnPosition.Scale));
+}
+
+void ATileCPP::PlaceAIPawn(TSubclassOf<APawn> AIToSpawn, FSpawnPosition SpawnPosition)
+{
+
+	APawn* Spawned = GetWorld()->SpawnActor<APawn>(AIToSpawn);
+	Spawned->SetActorRelativeLocation(SpawnPosition.Location);
+	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
+	Spawned->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));
+	Spawned->SetActorScale3D(FVector(SpawnPosition.Scale));
+	
+	Spawned->SpawnDefaultController();
+	Spawned->Tags.Add(FName("Enemy"));
 }
 
 // Called when the game starts or when spawned

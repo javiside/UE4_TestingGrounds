@@ -13,19 +13,19 @@ struct FPlacingProperties
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Placing Properties Struct")
-	int32 MinSpawn;
+	int32 MinSpawn = 1;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Placing Properties Struct")
-	int32 MaxSpawn;
+	int32 MaxSpawn = 1;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Placing Properties Struct")
-	float MinScale;
+	float MinScale = 1.0f;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Placing Properties Struct")
-	float MaxScale;
+	float MaxScale = 1.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Placing Properties Struct")
-	float Radius;
+	float Radius = 500.0f;
 
 };
 
@@ -48,8 +48,11 @@ public:
 	// Sets default values for this actor's properties
 	ATileCPP();
 
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	UFUNCTION(BlueprintCallable, Category = "Spawning")
 	void PlaceActors(TSubclassOf<AActor> ToSpawn, FPlacingProperties PlacingProperties);
+
+	UFUNCTION(BlueprintCallable, Category = "Spawning")
+	void PlaceAIPawns(TSubclassOf<APawn> AIToSpawn, int32 MinSpawn, int32 MaxSpawn);
 
 protected:
 	// Called when the game starts or when spawned
@@ -79,6 +82,8 @@ private:
 	bool FindEmptyLocation(FVector &OutLocation, float Radius);
 
 	void PlaceActor(TSubclassOf<AActor> ToSpawn, FSpawnPosition SpawnPosition);
+
+	void PlaceAIPawn(TSubclassOf<APawn> AIToSpawn, FSpawnPosition SpawnPosition);
 
 	bool CanSpawnAtLocation(FVector Location, float Radius);	
 
