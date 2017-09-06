@@ -16,6 +16,19 @@ void ATileCPP::SetPool(UActorPool* InPool)
 {
 	UE_LOG(LogTemp, Warning, TEXT(" %s Setting Pool %s"), *(this->GetName()), *(InPool->GetName()));
 	Pool = InPool;
+
+	PositionNavMeshBoundsVolume();
+}
+
+void ATileCPP::PositionNavMeshBoundsVolume()
+{
+	NavMeshBoundsVolume = Pool->CheckOut();
+	if (NavMeshBoundsVolume == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Not enough actors in pool "));
+		return;
+	}
+	NavMeshBoundsVolume->SetActorLocation(GetActorLocation());
 }
 
 void ATileCPP::PlaceActors(TSubclassOf<AActor> ToSpawn, int32 MinSpawn, int32 MaxSpawn, float Radius, float MinScale, float MaxScale)
@@ -69,6 +82,11 @@ void ATileCPP::PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint, float
 void ATileCPP::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void ATileCPP::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Pool->Return(NavMeshBoundsVolume);
 }
 
 // Called every frame
