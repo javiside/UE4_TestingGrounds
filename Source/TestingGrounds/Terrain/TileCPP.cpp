@@ -1,6 +1,7 @@
 // Copyright Javier Martinez 2017.
 
 #include "TileCPP.h"
+#include "ActorPool.h"
 
 
 // Sets default values
@@ -9,6 +10,12 @@ ATileCPP::ATileCPP()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+}
+
+void ATileCPP::SetPool(UActorPool* InPool)
+{
+	UE_LOG(LogTemp, Warning, TEXT(" %s Setting Pool %s"), *(this->GetName()), *(InPool->GetName()));
+	Pool = InPool;
 }
 
 void ATileCPP::PlaceActors(TSubclassOf<AActor> ToSpawn, int32 MinSpawn, int32 MaxSpawn, float Radius, float MinScale, float MaxScale)
