@@ -2,6 +2,8 @@
 
 #include "TileCPP.h"
 #include "ActorPool.h"
+#include "AI/Navigation/NavigationSystem.h"
+
 
 
 // Sets default values
@@ -9,6 +11,9 @@ ATileCPP::ATileCPP()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	NavigationBoundsOffset = FVector(2000, 0, 0);
+
 	MinExtent = FVector(0, -2000, 0);
 	MaxExtent = FVector(4000, 2000, 0);
 }
@@ -29,8 +34,9 @@ void ATileCPP::PositionNavMeshBoundsVolume()
 		UE_LOG(LogTemp, Error, TEXT("[%s] Not enough actors in pool "), *GetName());
 		return;
 	}
-	UE_LOG(LogTemp, Error, TEXT("[%s] Checked out %s "), *GetName(), *NavMeshBoundsVolume->GetName());
-	NavMeshBoundsVolume->SetActorLocation(GetActorLocation());
+	UE_LOG(LogTemp, Warning, TEXT("[%s] Checked out %s "), *GetName(), *NavMeshBoundsVolume->GetName());
+	NavMeshBoundsVolume->SetActorLocation(GetActorLocation() + NavigationBoundsOffset);
+	GetWorld()->GetNavigationSystem()->Build();
 }
 
 void ATileCPP::PlaceActors(TSubclassOf<AActor> ToSpawn, int32 MinSpawn, int32 MaxSpawn, float Radius, float MinScale, float MaxScale)
