@@ -124,6 +124,7 @@ void ATileCPP::BeginPlay()
 
 void ATileCPP::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	if (!Pool || !NavMeshBoundsVolume) { return; }
 	Pool->Return(NavMeshBoundsVolume);
 }
 

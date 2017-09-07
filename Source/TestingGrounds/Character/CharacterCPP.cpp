@@ -77,4 +77,5 @@ void ACharacterCPP::UnPossessed()
 void ACharacterCPP::PullTrigger()
 {
 	Gun->OnFire();
+	MakeNoise(1.0f, this, GetActorLocation());
 }
