@@ -28,10 +28,8 @@ void ATileCPP::PositionNavMeshBoundsVolume()
 	NavMeshBoundsVolume = Pool->CheckOut();
 	if (NavMeshBoundsVolume == nullptr)
 	{
-	//	UE_LOG(LogTemp, Error, TEXT("[%s] Not enough actors in pool "), *GetName());
 		return;
 	}
-	//UE_LOG(LogTemp, Warning, TEXT("[%s] Checked out %s "), *GetName(), *NavMeshBoundsVolume->GetName());
 	NavMeshBoundsVolume->SetActorLocation(GetActorLocation() + NavigationBoundsOffset);
 	GetWorld()->GetNavigationSystem()->Build();
 }
@@ -81,7 +79,7 @@ bool ATileCPP::FindEmptyLocation(FVector &OutLocation, float Radius)
 		FVector CandidatePoint = FMath::RandPointInBox(Bounds);
 		if (CanSpawnAtLocation(CandidatePoint, Radius))
 		{
-			OutLocation = CandidatePoint;
+			OutLocation = CandidatePoint + FVector(0, 0, 5);
 			return true;
 		}
 	}
