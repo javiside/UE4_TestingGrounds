@@ -12,7 +12,7 @@ ATileCPP::ATileCPP()
 
 	NavigationBoundsOffset = FVector(2000, 0, 0);
 
-	MinExtent = FVector(0, -2000, 0);
+	MinExtent = FVector(0, -2000, 0); // TODO make Y parameters
 	MaxExtent = FVector(4000, 2000, 0);
 }
 
