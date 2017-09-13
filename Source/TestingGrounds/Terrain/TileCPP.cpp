@@ -104,7 +104,7 @@ void ATileCPP::PlaceActor(TSubclassOf<APawn> ToSpawn, FSpawnPosition SpawnPositi
 	APawn* Spawned = GetWorld()->SpawnActor<APawn>(ToSpawn);
 	if (Spawned)
 	{
-		Spawned->SetActorRelativeLocation(SpawnPosition.Location);
+		Spawned->SetActorRelativeLocation(SpawnPosition.Location+FVector(0,0,100.0f));
 		Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
 		Spawned->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));
 		Spawned->SetActorScale3D(FVector(SpawnPosition.Scale));

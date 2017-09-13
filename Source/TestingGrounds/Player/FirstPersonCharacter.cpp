@@ -49,7 +49,7 @@ void AFirstPersonCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
-	if (!GunBlueprint)
+	/*if (!GunBlueprint)
 	{
 		return;
 	}
@@ -62,7 +62,7 @@ void AFirstPersonCharacter::BeginPlay()
 	{
 		InputComponent->BindAction("Fire", IE_Pressed, Gun, &AGun::OnFire);
 	}
-
+	*/
 	// Show or hide the two versions of the gun based on whether or not we're using motion controllers.
 	Mesh1P->SetHiddenInGame(false, true);
 }

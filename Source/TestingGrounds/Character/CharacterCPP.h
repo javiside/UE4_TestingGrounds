@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -6,6 +5,8 @@
 #include "CharacterCPP.generated.h"
 
 class UCameraComponent;
+ 
+
 UCLASS()
 class TESTINGGROUNDS_API ACharacterCPP : public ACharacter
 {
@@ -35,13 +36,13 @@ public:
 		void PullTrigger();
 
 private:
-	/** Pawn mesh: 1st person view (arms; seen only by self) */
+	/** Pawn mesh: 1st person view (arms; seen only by self) 
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
-		class USkeletalMeshComponent* Mesh1P;
+		class USkeletalMeshComponent* Mesh1P;*/
 
 	/** First person camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-		class UCameraComponent* FirstPersonCameraComponent;
+		class UCameraComponent* CameraComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		AGun* Gun;
