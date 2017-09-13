@@ -13,7 +13,7 @@ ACharacterCPP::ACharacterCPP()
 
 	// Create a CameraComponent	
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	CameraComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("LeftEye"));
+	CameraComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("RightEye"));
 	CameraComponent->bUsePawnControlRotation = true;
 }
 
