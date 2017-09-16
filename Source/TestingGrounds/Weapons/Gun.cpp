@@ -1,4 +1,4 @@
-
+// Copyright Javier Martinez 2017.
 
 #include "Gun.h"
 #include "BallProjectile.h"

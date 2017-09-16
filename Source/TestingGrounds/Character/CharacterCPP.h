@@ -1,11 +1,11 @@
+// Copyright Javier Martinez 2017.
+
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "CharacterCPP.generated.h"
 
-class UCameraComponent;
- 
 
 UCLASS()
 class TESTINGGROUNDS_API ACharacterCPP : public ACharacter
@@ -24,11 +24,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	virtual void UnPossessed() override;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		TSubclassOf<class AGun> GunBlueprint;
 
@@ -37,10 +32,9 @@ public:
 
 private:
 
-	/** First person camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		class UCameraComponent* CameraComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-		AGun* Gun;
+		class AGun* Gun;
 };

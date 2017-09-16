@@ -1,4 +1,4 @@
-
+// Copyright Javier Martinez 2017.
 
 #include "CharacterCPP.h"
 #include "Weapons/Gun.h"
@@ -27,33 +27,14 @@ void ACharacterCPP::BeginPlay()
 		return;
 	}
 	Gun = GetWorld()->SpawnActor<AGun>(GunBlueprint);
-	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint")); 
-
+	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
 	Gun->AnimInstance3P = GetMesh()->GetAnimInstance();
-
-	if (InputComponent)
-	{
-		//InputComponent->BindAction("Fire", IE_Pressed, this, &ACharacterCPP::PullTrigger);
-	}
 }
 
 // Called every frame
 void ACharacterCPP::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-}
-
-// Called to bind functionality to input
-void ACharacterCPP::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-}
-
-void ACharacterCPP::UnPossessed()
-{
-	Super::UnPossessed();
-	if (!Gun) { return; }
-	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
 }
 
 void ACharacterCPP::PullTrigger()
